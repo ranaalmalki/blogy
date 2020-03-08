@@ -84,23 +84,34 @@ router.post("/api/articles", (req, res) => {
  * Description:..Delete An article by Article ID
  */
 
+router.delete("/api/articles/:id", (req, res) => {
+  Article.findById(req.params.id)
+    .then(article => {
+      if (article) {
+        //pass the result of the mongoos `delet`  method to the next  `.then`
+        return article.remove();
+      } else {
+        //if we couldnt find a doucment with the matching ID
+        res.status(404).json({
+          error: {
+            name: "DocumentNotFoundError",
+            message: "The provied ID Dosent match any documents"
+          }
+        });
+      }
+    })
+    .then(()=>{
+        //if the deletion succeeded , return 204 and no JSON
+        res.status(204).end(); 
+    })
+    //Catch any errors the might occuer
+    .catch(error => {
+      res.status(500).json({ error: error });
+    });
+});
+
 // Export the Router so we can use it in the server.js file
 module.exports = router;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 function find(cbSuccess, cbError)
