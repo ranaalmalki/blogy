@@ -6,6 +6,14 @@ const mongoose =require('mongoose');
 //Require Route file
 const indexRouter =require('./app/routes/index');
 
+
+//Require DB configutstion file
+const db =require('./config/db');
+// Establish Database Connection 
+mongoose.connect(db,{useNewUrlParser:true});
+mongoose.connection.once('open',()=>{
+    console.log('connected to mongo',db);
+});
 //Instaniate Express Application Object 
 const app =express();
 
