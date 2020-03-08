@@ -21,7 +21,12 @@ const app =express();
 
 //Define the port for the API to run on 
 const port= process.env.PORT || 5000;
+/***Middleware***/
 
+//Add `bodyParser` middleware which will parse JSON requests 
+//into JS objects before they reach the route files
+//The method `use` sets up middleware for the Eprees appliction 
+app.use(express.json());
 /***Routes***/
 
 //Mount importes Routers 
