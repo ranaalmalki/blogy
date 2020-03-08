@@ -5,6 +5,7 @@ const mongoose =require('mongoose');
 
 //Require Route file
 const indexRouter =require('./app/routes/index');
+const articlesRouter = require('./app/routes/articles');
 
 
 //Require DB configutstion file
@@ -25,8 +26,18 @@ const port= process.env.PORT || 5000;
 
 //Mount importes Routers 
 app.use(indexRouter);
+app.use(articlesRouter);
 
 //Start the server to listen to the requests on a given port 
 app.listen(port,()=>{
     console.log(`blogy is listeing on port ${port}`);
 }) 
+/*
+  C.U.R.D - Table
+  Create          CREATE
+  Read
+    Read All      INDEX
+    Read By ID    SHOW
+  Update          UPDATE
+  Delete          DESTROY
+*/ 
