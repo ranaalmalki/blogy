@@ -76,7 +76,32 @@ router.post("/api/articles", (req, res) => {
  * URI:........./api/articles/5d664b8b4f5092aba18e9
  * Description:..update An Article by Article ID
  */
-
+router.patch("/api/articles/:id", (req, res) => {
+    Article.findById(req.params.id)
+      .then(article => {
+        if (article) {
+          //pass the result of the mongoos `delet`  method to the next  `.then`
+          return article.update(req.body.article);
+        } else {
+          //if we couldnt find a doucment with the matching ID
+          res.status(404).json({
+            error: {
+              name: "DocumentNotFoundError",
+              message: "The provied ID Dosent match any documents"
+            }
+          });
+        }
+      })
+      .then(()=>{
+          //if the deletion succeeded , return 204 and no JSON
+          res.status(204).end(); 
+      })
+      //Catch any errors the might occuer
+      .catch(error => {
+        res.status(500).json({ error: error });
+      });
+  });
+  
 /**
  * Action:.......DESTROY
  * MEthod:..........DELETE
